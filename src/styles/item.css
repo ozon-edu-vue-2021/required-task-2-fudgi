@@ -11,3 +11,7 @@
 .item__name{
     margin-left: 15px;
 }
+
+.item_selected {
+  border: 1px dashed;
+}
