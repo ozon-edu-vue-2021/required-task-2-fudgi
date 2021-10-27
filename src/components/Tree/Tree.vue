@@ -33,4 +33,7 @@ export default {
 .tree {
   margin-left: 40px;
 }
+.tree__item {
+  margin-top: 3px;
+}
 </style>

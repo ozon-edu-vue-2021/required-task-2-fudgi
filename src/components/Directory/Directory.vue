@@ -1,14 +1,21 @@
 <template>
   <div class="directory">
-    <div :class="directoryNameClasses" @click="handleFolder">{{ name }}</div>
+    <div class="item" @click="handleFolder">
+      <icon-folder :opened="opened" />
+      <span :class="directoryNameClasses">{{ name }}</span>
+    </div>
     <tree v-if="opened" :data="contents" />
   </div>
 </template>
 
 <script>
+import IconFolder from "../Icons/IconFolder.vue";
+import "../../styles/item.css";
+
 export default {
   name: "Directory",
   components: {
+    IconFolder,
     Tree: () => import("../Tree/Tree.vue"),
   },
   props: {
@@ -35,6 +42,7 @@ export default {
     directoryNameClasses() {
       return [
         "directory__name",
+        "item__name",
         {
           directory__name_open: this.opened,
         },
@@ -47,6 +55,5 @@ export default {
 <style scoped>
 .directory__name_open {
   font-weight: 700;
-  color: blueviolet;
 }
 </style>

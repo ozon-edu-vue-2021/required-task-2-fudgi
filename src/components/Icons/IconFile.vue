@@ -1,26 +1,19 @@
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="1.1"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    class="icon-file"
-  >
+  <icon-base>
     <path d="M15 2v5h5v15h-16v-20h11zm1-2h-14v24h20v-18l-6-6z" />
-  </svg>
+  </icon-base>
 </template>
 
 <script>
+import IconBase from "./IconBase.vue";
+
 export default {
   name: "IconFile",
+  components: {
+    IconBase,
+  },
 };
 </script>
 
 <style scoped>
-.icon-file:hover {
-  fill: #216bff;
-  cursor: pointer;
-}
 </style>
