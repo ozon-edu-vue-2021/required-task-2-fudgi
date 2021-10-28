@@ -6,27 +6,27 @@
         v-bind="item"
         :leaf="getLeaf(index)"
       />
-      <File v-if="item.type == 'file'" v-bind="item" :leaf="getLeaf(index)" />
-      <LinkElement
-        v-if="item.type == 'link'"
-        v-bind="item"
-        :leaf="getLeaf(index)"
-      />
+      <Leaf v-else v-bind="item" :leaf="getLeaf(index)">
+        <IconLink v-if="item.type == 'link'" />
+        <IconFile v-else />
+      </Leaf>
     </div>
   </div>
 </template>
 
 <script>
 import Directory from "../Directory/Directory.vue";
-import File from "../File/File.vue";
-import LinkElement from "../Link/Link.vue";
+import Leaf from "../Leaf/Leaf.vue";
+import IconLink from "../Icons/IconLink.vue";
+import IconFile from "../Icons/IconFile.vue";
 
 export default {
   name: "Tree",
   components: {
     Directory,
-    File,
-    LinkElement,
+    Leaf,
+    IconLink,
+    IconFile,
   },
   props: {
     data: {
