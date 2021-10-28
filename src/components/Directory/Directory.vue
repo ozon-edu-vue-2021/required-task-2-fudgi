@@ -1,5 +1,5 @@
 <template>
-  <div class="directory">
+  <div class="directory" :data-value="name">
     <div class="item" @click="handleFolder">
       <IconFolder :opened="opened" />
       <span :class="directoryNameClasses">{{ name }}</span>

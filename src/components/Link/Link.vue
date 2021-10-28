@@ -1,5 +1,10 @@
 <template>
-  <div :title="target" :class="treeItemClasses" @click="handleSelection">
+  <div
+    :title="target"
+    :class="treeItemClasses"
+    @click="handleSelection"
+    :data-value="name"
+  >
     <IconLink />
     <span class="item__name">{{ name }} </span>
   </div>
