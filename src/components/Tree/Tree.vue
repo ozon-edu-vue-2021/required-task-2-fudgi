@@ -1,9 +1,9 @@
 <template>
   <div class="tree">
     <div class="tree__item" v-for="(item, index) in data" :key="item + index">
-      <directory v-if="item.type == 'directory'" v-bind="item" />
-      <file v-if="item.type == 'file'" v-bind="item" />
-      <link-element v-if="item.type == 'link'" v-bind="item" />
+      <Directory v-if="item.type == 'directory'" v-bind="item" />
+      <File v-if="item.type == 'file'" v-bind="item" />
+      <LinkElement v-if="item.type == 'link'" v-bind="item" />
     </div>
   </div>
 </template>

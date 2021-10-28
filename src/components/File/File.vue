@@ -1,6 +1,6 @@
 <template>
   <div :class="treeItemClasses" @click="handleSelection">
-    <icon-file />
+    <IconFile />
     <span class="item__name">{{ name }}</span>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="directory">
     <div class="item" @click="handleFolder">
-      <icon-folder :opened="opened" />
+      <IconFolder :opened="opened" />
       <span :class="directoryNameClasses">{{ name }}</span>
     </div>
     <tree v-if="opened" :data="contents" />

@@ -1,7 +1,7 @@
 <template>
-  <icon-base>
+  <IconBase>
     <path d="M15 2v5h5v15h-16v-20h11zm1-2h-14v24h20v-18l-6-6z" />
-  </icon-base>
+  </IconBase>
 </template>
 
 <script>
