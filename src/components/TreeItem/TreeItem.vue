@@ -1,6 +1,12 @@
 <script>
 export default {
   inject: ["getLeaf"],
+  props: {
+    leaf: {
+      type: String,
+      default: () => "",
+    },
+  },
   computed: {
     treeItemClasses() {
       return [

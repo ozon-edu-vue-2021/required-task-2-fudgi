@@ -1,6 +1,6 @@
 <template>
   <div class="directory" :data-value="name" :data-leaf="leaf">
-    <div class="item" @click="handleFolder">
+    <div :class="treeItemClasses" @click="handleFolder">
       <IconFolder :opened="opened" />
       <span :class="directoryNameClasses">{{ name }}</span>
     </div>
@@ -10,10 +10,12 @@
 
 <script>
 import IconFolder from "../Icons/IconFolder.vue";
+import TreeItem from "../TreeItem/TreeItem.vue";
 import "../../styles/item.css";
 
 export default {
   name: "Directory",
+  extends: TreeItem,
   components: {
     IconFolder,
     Tree: () => import("../Tree/Tree.vue"),
@@ -26,10 +28,6 @@ export default {
     contents: {
       type: Array,
       default: () => [],
-    },
-    leaf: {
-      type: String,
-      default: () => "",
     },
   },
   data() {

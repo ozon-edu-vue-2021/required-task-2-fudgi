@@ -21,10 +21,6 @@ export default {
       type: String,
       default: () => "",
     },
-    leaf: {
-      type: String,
-      default: () => "",
-    },
   },
 };
 </script>
