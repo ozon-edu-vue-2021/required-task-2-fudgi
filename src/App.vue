@@ -20,6 +20,12 @@ export default {
     };
   },
   data: () => ({ data: [jsonData], selectedPath: "", selectedLeaf: "" }),
+  mounted() {
+    document.addEventListener("keydown", this.handleKeyPress);
+  },
+  beforeDestroy() {
+    document.removeEventListener("keydown", this.handleKeyPress);
+  },
   methods: {
     handleLeafClick(e) {
       const target = e.target;
@@ -47,6 +53,9 @@ export default {
     },
     getLeaf() {
       return this.selectedLeaf;
+    },
+    handleKeyPress(e) {
+      console.log(e);
     },
   },
 };
