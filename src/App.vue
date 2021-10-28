@@ -21,7 +21,15 @@ export default {
   },
   data: () => ({ data: [jsonData], selectedPath: "", selectedLeaf: "" }),
   methods: {
-    handleClick(e) {
+    handleLeafClick(e) {
+      const target = e.target;
+      const leaf =
+        target.dataset?.leaf || target.closest("[data-leaf]")?.dataset?.leaf;
+      if (leaf) {
+        this.selectedLeaf = leaf;
+      }
+    },
+    handlePath(e) {
       const pathArr = e
         .composedPath()
         .map((item) => item.dataset?.value)
@@ -32,13 +40,10 @@ export default {
 
       const path = pathArr.join("/");
       this.selectedPath = path;
-
-      const leaf =
-        e.target.dataset?.leaf ||
-        e.target.closest("[data-leaf]")?.dataset?.leaf;
-      if (leaf) {
-        this.selectedLeaf = leaf;
-      }
+    },
+    handleClick(e) {
+      this.handleLeafClick(e);
+      this.handlePath(e);
     },
     getLeaf() {
       return this.selectedLeaf;
