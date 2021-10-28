@@ -14,17 +14,34 @@ export default {
   components: {
     Tree,
   },
-  data: () => ({ data: [jsonData], selectedPath: "" }),
+  provide() {
+    return {
+      getLeaf: this.getLeaf,
+    };
+  },
+  data: () => ({ data: [jsonData], selectedPath: "", selectedLeaf: "" }),
   methods: {
     handleClick(e) {
-      const path = e
+      const pathArr = e
         .composedPath()
         .map((item) => item.dataset?.value)
         .filter((item) => item)
-        .reverse()
-        .join("/");
-      if (!path) return;
+        .reverse();
+
+      if (!pathArr.length) return;
+
+      const path = pathArr.join("/");
       this.selectedPath = path;
+
+      const leaf =
+        e.target.dataset?.leaf ||
+        e.target.closest("[data-leaf]")?.dataset?.leaf;
+      if (leaf) {
+        this.selectedLeaf = leaf;
+      }
+    },
+    getLeaf() {
+      return this.selectedLeaf;
     },
   },
 };
@@ -36,12 +53,16 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin: 60px 20px 20px;
-  display: flex;
-  flex-direction: column;
+  margin: 80px 20px 20px;
 }
 .app__path {
+  position: fixed;
+  left: 50%;
   height: 40px;
-  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0 20 px;
+  transform: translateX(-50%);
+  background-color: wheat;
 }
 </style>

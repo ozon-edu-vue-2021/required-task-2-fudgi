@@ -2,8 +2,8 @@
   <div
     :title="target"
     :class="treeItemClasses"
-    @click="handleSelection"
     :data-value="name"
+    :data-leaf="leaf"
   >
     <IconLink />
     <span class="item__name">{{ name }} </span>
@@ -27,6 +27,10 @@ export default {
       default: () => "",
     },
     target: {
+      type: String,
+      default: () => "",
+    },
+    leaf: {
       type: String,
       default: () => "",
     },

@@ -1,5 +1,5 @@
 <template>
-  <div :class="treeItemClasses" @click="handleSelection" :data-value="name">
+  <div :class="treeItemClasses" :data-value="name" :data-leaf="leaf">
     <IconFile />
     <span class="item__name">{{ name }}</span>
   </div>
@@ -18,6 +18,10 @@ export default {
   },
   props: {
     name: {
+      type: String,
+      default: () => "",
+    },
+    leaf: {
       type: String,
       default: () => "",
     },

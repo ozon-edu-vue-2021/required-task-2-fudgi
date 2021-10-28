@@ -1,21 +1,12 @@
 <script>
 export default {
-  data() {
-    return {
-      selected: false,
-    };
-  },
-  methods: {
-    handleSelection() {
-      this.selected = !this.selected;
-    },
-  },
+  inject: ["getLeaf"],
   computed: {
     treeItemClasses() {
       return [
         "item",
         {
-          item_selected: this.selected,
+          item_selected: this.getLeaf() === this.leaf,
         },
       ];
     },

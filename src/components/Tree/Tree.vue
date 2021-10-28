@@ -1,9 +1,17 @@
 <template>
   <div class="tree">
     <div class="tree__item" v-for="(item, index) in data" :key="item + index">
-      <Directory v-if="item.type == 'directory'" v-bind="item" />
-      <File v-if="item.type == 'file'" v-bind="item" />
-      <LinkElement v-if="item.type == 'link'" v-bind="item" />
+      <Directory
+        v-if="item.type == 'directory'"
+        v-bind="item"
+        :leaf="getLeaf(index)"
+      />
+      <File v-if="item.type == 'file'" v-bind="item" :leaf="getLeaf(index)" />
+      <LinkElement
+        v-if="item.type == 'link'"
+        v-bind="item"
+        :leaf="getLeaf(index)"
+      />
     </div>
   </div>
 </template>
@@ -24,6 +32,15 @@ export default {
     data: {
       type: Array,
       default: () => [],
+    },
+    leaf: {
+      type: String,
+      default: () => "",
+    },
+  },
+  methods: {
+    getLeaf(index) {
+      return this.leaf ? this.leaf + "," + index : String(index);
     },
   },
 };

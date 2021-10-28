@@ -1,10 +1,10 @@
 <template>
-  <div class="directory" :data-value="name">
+  <div class="directory" :data-value="name" :data-leaf="leaf">
     <div class="item" @click="handleFolder">
       <IconFolder :opened="opened" />
       <span :class="directoryNameClasses">{{ name }}</span>
     </div>
-    <tree v-if="opened" :data="contents" />
+    <Tree v-if="opened" :data="contents" :leaf="leaf" />
   </div>
 </template>
 
@@ -26,6 +26,10 @@ export default {
     contents: {
       type: Array,
       default: () => [],
+    },
+    leaf: {
+      type: String,
+      default: () => "",
     },
   },
   data() {
