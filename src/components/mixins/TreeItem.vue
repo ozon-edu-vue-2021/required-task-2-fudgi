@@ -1,6 +1,6 @@
 <script>
 export default {
-  inject: ["getLeaf"],
+  inject: ["getSelectedLeaf"],
   props: {
     leaf: {
       type: String,
@@ -12,7 +12,7 @@ export default {
       return [
         "item",
         {
-          item_selected: this.getLeaf() === this.leaf,
+          item_selected: this.getSelectedLeaf() === this.leaf,
         },
       ];
     },

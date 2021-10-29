@@ -1,6 +1,6 @@
 <template>
-  <div class="directory" :data-value="name" :data-leaf="leaf">
-    <div :class="treeItemClasses" @click="handleFolder">
+  <div class="directory" :data-leaf="leaf">
+    <div :class="treeItemClasses" @dblclick="handleDirectoryClick">
       <IconFolder :opened="opened" />
       <span :class="directoryNameClasses">{{ name }}</span>
     </div>
@@ -10,7 +10,8 @@
 
 <script>
 import IconFolder from "../Icons/IconFolder.vue";
-import TreeItem from "../TreeItem/TreeItem.vue";
+import TreeItem from "../mixins/TreeItem.vue";
+import EventManager from "../../utils/EventManager";
 import "../../styles/item.css";
 
 export default {
@@ -36,8 +37,17 @@ export default {
     };
   },
   methods: {
-    handleFolder() {
+    handleDirectoryClick() {
       this.opened = !this.opened;
+    },
+    openDirectory(selectedLeaf) {
+      if (this.leaf !== selectedLeaf) return;
+      this.opened = true;
+      EventManager.$emit("directory", "opened");
+    },
+    closeDirectory(selectedLeaf) {
+      if (this.leaf !== selectedLeaf) return;
+      this.opened = false;
     },
   },
   computed: {
@@ -50,6 +60,10 @@ export default {
         },
       ];
     },
+  },
+  mounted() {
+    EventManager.$on("directory", "open", this.openDirectory);
+    EventManager.$on("directory", "close", this.closeDirectory);
   },
 };
 </script>

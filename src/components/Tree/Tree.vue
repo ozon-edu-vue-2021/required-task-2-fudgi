@@ -4,9 +4,9 @@
       <Directory
         v-if="item.type == 'directory'"
         v-bind="item"
-        :leaf="getLeaf(index)"
+        :leaf="getSelectedLeaf(index)"
       />
-      <Leaf v-else v-bind="item" :leaf="getLeaf(index)">
+      <Leaf v-else v-bind="item" :leaf="getSelectedLeaf(index)">
         <IconLink v-if="item.type == 'link'" />
         <IconFile v-else />
       </Leaf>
@@ -39,8 +39,8 @@ export default {
     },
   },
   methods: {
-    getLeaf(index) {
-      return this.leaf ? this.leaf + "," + index : String(index);
+    getSelectedLeaf(index) {
+      return this.leaf ? `${this.leaf},${index}` : String(index);
     },
   },
 };
