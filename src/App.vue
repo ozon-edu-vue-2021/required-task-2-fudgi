@@ -35,7 +35,7 @@ export default {
     data: [jsonData],
     instructions,
     selectedLeaf: "0",
-    openRequest: false,
+    openDirectoryRequest: false,
   }),
   mounted() {
     document.addEventListener("keydown", this.handleKeyPress);
@@ -76,7 +76,7 @@ export default {
         path[lastLeaf] = prevLeaf >= 0 ? prevLeaf : 0;
         this.setPath(path);
       } else if (key === Arrow.RIGHT) {
-        this.openRequest = true;
+        this.openDirectoryRequest = true;
         EventManager.$emit("directory", "open", this.selectedLeaf);
       } else if (key === Arrow.LEFT) {
         if (path.length > 1) path.pop();
@@ -85,8 +85,8 @@ export default {
       }
     },
     handleDirectoryOpen() {
-      if (!this.openRequest) return;
-      this.openRequest = false;
+      if (!this.openDirectoryRequest) return;
+      this.openDirectoryRequest = false;
       this.selectedLeaf = `${this.selectedLeaf},0`;
     },
     getPath() {
