@@ -2,6 +2,11 @@
   <div class="app" @click="handleClick">
     <p class="app__path">{{ selectedPath }}</p>
     <Tree :data="data" />
+    <div class="instructions">
+      <div v-for="instruction in instructions" :key="instruction">
+        {{ instruction }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -9,7 +14,7 @@
 import Tree from "./components/Tree/Tree.vue";
 import EventManager from "./utils/EventManager";
 import jsonData from "../public/static/node_modules.json";
-import { Arrow, arrowsKeyCodes } from "./data/data";
+import { Arrow, arrowsKeyCodes, instructions } from "./data/data";
 import {
   getContentsLength,
   getLastIndex,
@@ -28,6 +33,7 @@ export default {
   },
   data: () => ({
     data: [jsonData],
+    instructions,
     selectedLeaf: "0",
     openRequest: false,
   }),
@@ -116,5 +122,13 @@ html {
   margin: 0;
   transform: translateX(-50%);
   background-color: #d3c7b2;
+}
+.instructions {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 20px;
+  opacity: 0.8;
+  background-color: #bfd3b2;
 }
 </style>

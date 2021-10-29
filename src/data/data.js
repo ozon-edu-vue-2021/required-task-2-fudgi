@@ -6,4 +6,11 @@ const Arrow = {
 };
 const arrowsKeyCodes = Object.values(Arrow);
 
-export { Arrow, arrowsKeyCodes };
+const instructions = [
+  "Двойной клик - Oткрыть папку",
+  "→ - Перейти в папку",
+  "← - Выйти из папки",
+  "↕ - Навигация по папке",
+];
+
+export { Arrow, arrowsKeyCodes, instructions };
