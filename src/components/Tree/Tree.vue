@@ -7,8 +7,7 @@
         :leaf="getSelectedLeaf(index)"
       />
       <Leaf v-else v-bind="item" :leaf="getSelectedLeaf(index)">
-        <IconLink v-if="item.type == 'link'" />
-        <IconFile v-else />
+        <IconLeaf :type="item.type" />
       </Leaf>
     </div>
   </div>
@@ -17,16 +16,14 @@
 <script>
 import Directory from "../Directory/Directory.vue";
 import Leaf from "../Leaf/Leaf.vue";
-import IconLink from "../Icons/IconLink.vue";
-import IconFile from "../Icons/IconFile.vue";
+import IconLeaf from "../Icons/IconLeaf.vue";
 
 export default {
   name: "Tree",
   components: {
     Directory,
     Leaf,
-    IconLink,
-    IconFile,
+    IconLeaf,
   },
   props: {
     data: {

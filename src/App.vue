@@ -112,9 +112,8 @@ html {
 .app__path {
   position: fixed;
   left: 50%;
-  display: flex;
-  align-items: center;
   padding: 5px 20px;
+  margin: 0;
   transform: translateX(-50%);
   background-color: #d3c7b2;
 }
