@@ -1,19 +1,22 @@
 <template>
-  <div class="directory">
-    <div class="item" @click="handleFolder">
-      <icon-folder :opened="opened" />
+  <div class="directory" :data-leaf="leaf">
+    <div :class="treeItemClasses" @dblclick="handleDirectoryClick">
+      <IconFolder :opened="opened" />
       <span :class="directoryNameClasses">{{ name }}</span>
     </div>
-    <tree v-if="opened" :data="contents" />
+    <Tree v-if="opened" :data="contents" :leaf="leaf" />
   </div>
 </template>
 
 <script>
 import IconFolder from "../Icons/IconFolder.vue";
+import TreeItem from "../mixins/TreeItem.vue";
+import EventManager from "../../utils/EventManager";
 import "../../styles/item.css";
 
 export default {
   name: "Directory",
+  extends: TreeItem,
   components: {
     IconFolder,
     Tree: () => import("../Tree/Tree.vue"),
@@ -34,8 +37,17 @@ export default {
     };
   },
   methods: {
-    handleFolder() {
+    handleDirectoryClick() {
       this.opened = !this.opened;
+    },
+    openDirectory(selectedLeaf) {
+      if (this.leaf !== selectedLeaf) return;
+      this.opened = true;
+      EventManager.$emit("directory", "opened");
+    },
+    closeDirectory(selectedLeaf) {
+      if (this.leaf !== selectedLeaf) return;
+      this.opened = false;
     },
   },
   computed: {
@@ -48,6 +60,10 @@ export default {
         },
       ];
     },
+  },
+  mounted() {
+    EventManager.$on("directory", "open", this.openDirectory);
+    EventManager.$on("directory", "close", this.closeDirectory);
   },
 };
 </script>

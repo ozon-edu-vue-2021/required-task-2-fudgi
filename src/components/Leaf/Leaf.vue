@@ -1,21 +1,17 @@
 <template>
-  <div :title="target" :class="treeItemClasses" @click="handleSelection">
-    <icon-link />
+  <div :title="target" :class="treeItemClasses" :data-leaf="leaf">
+    <slot></slot>
     <span class="item__name">{{ name }} </span>
   </div>
 </template>
 
 <script>
-import IconLink from "../Icons/IconLink.vue";
-import TreeItem from "../TreeItem/TreeItem.vue";
+import TreeItem from "../mixins/TreeItem.vue";
 import "../../styles/item.css";
 
 export default {
-  name: "Link",
+  name: "Leaf",
   extends: TreeItem,
-  components: {
-    IconLink,
-  },
   props: {
     name: {
       type: String,

@@ -1,29 +1,43 @@
 <template>
   <div class="tree">
     <div class="tree__item" v-for="(item, index) in data" :key="item + index">
-      <directory v-if="item.type == 'directory'" v-bind="item" />
-      <file v-if="item.type == 'file'" v-bind="item" />
-      <link-element v-if="item.type == 'link'" v-bind="item" />
+      <Directory
+        v-if="item.type == 'directory'"
+        v-bind="item"
+        :leaf="getSelectedLeaf(index)"
+      />
+      <Leaf v-else v-bind="item" :leaf="getSelectedLeaf(index)">
+        <IconLeaf :type="item.type" />
+      </Leaf>
     </div>
   </div>
 </template>
 
 <script>
 import Directory from "../Directory/Directory.vue";
-import File from "../File/File.vue";
-import LinkElement from "../Link/Link.vue";
+import Leaf from "../Leaf/Leaf.vue";
+import IconLeaf from "../Icons/IconLeaf.vue";
 
 export default {
   name: "Tree",
   components: {
     Directory,
-    File,
-    LinkElement,
+    Leaf,
+    IconLeaf,
   },
   props: {
     data: {
       type: Array,
       default: () => [],
+    },
+    leaf: {
+      type: String,
+      default: () => "",
+    },
+  },
+  methods: {
+    getSelectedLeaf(index) {
+      return this.leaf ? `${this.leaf},${index}` : String(index);
     },
   },
 };
