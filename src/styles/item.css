@@ -1,0 +1,19 @@
+.item {
+  width: fit-content;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px 4px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.item__name{
+    margin-left: 15px;
+}
+
+.item_selected {
+  background-color: #c5b0b0;
+  border: 1px dashed;
+}

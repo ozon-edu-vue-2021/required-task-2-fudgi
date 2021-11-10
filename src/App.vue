@@ -1,28 +1,134 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="app" @click="handleClick">
+    <p class="app__path">{{ selectedPath }}</p>
+    <Tree :data="data" />
+    <div class="instructions">
+      <div v-for="instruction in instructions" :key="instruction">
+        {{ instruction }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Tree from "./components/Tree/Tree.vue";
+import EventManager from "./utils/EventManager";
+import jsonData from "../public/static/node_modules.json";
+import { Arrow, arrowsKeyCodes, instructions } from "./data/data";
+import {
+  getContentsLength,
+  getLastIndex,
+  getConcatedPath,
+} from "./utils/utils";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Tree,
+  },
+  provide() {
+    return {
+      getSelectedLeaf: this.getSelectedLeaf,
+    };
+  },
+  data: () => ({
+    data: [jsonData],
+    instructions,
+    selectedLeaf: "0",
+    openDirectoryRequest: false,
+  }),
+  mounted() {
+    document.addEventListener("keydown", this.handleKeyPress);
+    EventManager.$on("directory", "opened", this.handleDirectoryOpen);
+  },
+  beforeDestroy() {
+    document.removeEventListener("keydown", this.handleKeyPress);
+    EventManager.$off("directory", "opened", this.handleDirectoryOpen);
+  },
+  methods: {
+    handleClick(e) {
+      const target = e.target;
+      const leaf =
+        target.dataset?.leaf || target.closest("[data-leaf]")?.dataset?.leaf;
+      if (leaf) {
+        this.selectedLeaf = leaf;
+      }
+    },
+    getSelectedLeaf() {
+      return this.selectedLeaf;
+    },
+    handleKeyPress(e) {
+      const key = e.keyCode;
+      if (!arrowsKeyCodes.includes(key)) return;
+      e.preventDefault();
+      const path = this.getPath();
+      const lastLeaf = getLastIndex(path);
+
+      if (key === Arrow.DOWN) {
+        const length = getContentsLength(this.data, path);
+        const nextLeaf = Number(path[lastLeaf]) + 1;
+        const lastContentsIndex = length ? length - 1 : 0;
+        path[lastLeaf] =
+          nextLeaf > lastContentsIndex ? lastContentsIndex : nextLeaf;
+        this.setPath(path);
+      } else if (key === Arrow.UP) {
+        const prevLeaf = Number(path[lastLeaf]) - 1;
+        path[lastLeaf] = prevLeaf >= 0 ? prevLeaf : 0;
+        this.setPath(path);
+      } else if (key === Arrow.RIGHT) {
+        this.openDirectoryRequest = true;
+        EventManager.$emit("directory", "open", this.selectedLeaf);
+      } else if (key === Arrow.LEFT) {
+        if (path.length > 1) path.pop();
+        this.setPath(path);
+        EventManager.$emit("directory", "close", this.selectedLeaf);
+      }
+    },
+    handleDirectoryOpen() {
+      if (!this.openDirectoryRequest) return;
+      this.openDirectoryRequest = false;
+      this.selectedLeaf = `${this.selectedLeaf},0`;
+    },
+    getPath() {
+      return this.selectedLeaf.split(",");
+    },
+    setPath(path) {
+      this.selectedLeaf = path.join(",");
+    },
+  },
+  computed: {
+    selectedPath() {
+      return getConcatedPath(this.data, this.getPath());
+    },
+  },
+};
 </script>
 
 <style>
-#app {
+html {
+  background-color: #afafaf;
+}
+.app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 80px 20px 20px;
+}
+.app__path {
+  position: fixed;
+  left: 50%;
+  padding: 5px 20px;
+  margin: 0;
+  transform: translateX(-50%);
+  background-color: #d3c7b2;
+}
+.instructions {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 20px;
+  opacity: 0.8;
+  background-color: #bfd3b2;
 }
 </style>
